@@ -1,0 +1,10 @@
+user –≈œ¢±Ì
+
+id userName sex birthDay   where  company colloge qianming
+
+group
+ id name creatTime qianming
+
+
+ groupEntry
+ groupId userId
