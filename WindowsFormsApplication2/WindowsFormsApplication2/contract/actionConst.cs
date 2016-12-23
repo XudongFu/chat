@@ -25,5 +25,10 @@ namespace WindowsFormsApplication2.contract
 
         public const string server = "server";
 
+        /// <summary>
+        /// 监听的端口
+        /// </summary>
+        public const int port = 1500;
+
     }
 }

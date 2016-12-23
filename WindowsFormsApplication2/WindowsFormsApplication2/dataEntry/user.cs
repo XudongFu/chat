@@ -11,27 +11,17 @@ namespace WindowsFormsApplication2.core
         List<device> devices = new List<device>();
         string name;
         uint id;
+        string sex;
+        string colloge;
+        string commany;
+        DateTime birthday;
 
         user()
         {
 
         }
 
-        static void addUser()
-        {
-
-        }
-
-        static void deleteUser()
-        {
-
-        }
-
-        static void  addGroup()
-        {
-
-
-        }
+       
 
     }
 }

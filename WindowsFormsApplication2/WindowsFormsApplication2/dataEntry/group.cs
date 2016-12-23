@@ -8,9 +8,16 @@ namespace WindowsFormsApplication2.dataEntry
 {
     class group
     {
-        static void addGroup()
-        {
+        uint id;
+        string name;
+        DateTime createdTime;
 
+        List<user> users;
+
+        group()
+        {
+            
+            
         }
 
     }
