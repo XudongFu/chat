@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using WindowsFormsApplication2.dataEntry;
 namespace WindowsFormsApplication2.data
 {
 
@@ -13,10 +13,13 @@ namespace WindowsFormsApplication2.data
     class groupList
     {
 
-        List<groupList> groups = new List<groupList>();
+        string path = "./savedData/user.txt";
+
+        Dictionary<uint, group> groups = new Dictionary<uint, group>();
 
         groupList()
         {
+            praseTxt txt = new praseTxt(path);
 
         }
 

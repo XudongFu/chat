@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace WindowsFormsApplication2.core
+namespace WindowsFormsApplication2.dataEntry
 {
     class user
     {

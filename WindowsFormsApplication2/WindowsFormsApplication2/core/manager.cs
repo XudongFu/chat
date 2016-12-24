@@ -6,7 +6,7 @@ using System.Threading;
 using chat = WindowsFormsApplication2.contract;
 using System.Collections.Concurrent;
 using WindowsFormsApplication2.dataEntry;
-namespace WindowsFormsApplication2.core
+namespace WindowsFormsApplication2.dataEntry
 {
     class manager
     {

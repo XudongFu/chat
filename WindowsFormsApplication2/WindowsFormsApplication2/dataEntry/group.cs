@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-
-using WindowsFormsApplication2.core;
+using WindowsFormsApplication2.dataEntry;
 
 namespace WindowsFormsApplication2.dataEntry
 {

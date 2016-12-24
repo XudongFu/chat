@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Net.Sockets;
 
-namespace WindowsFormsApplication2.core
+namespace WindowsFormsApplication2.dataEntry
 {
     class device
     {

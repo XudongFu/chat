@@ -30,5 +30,8 @@ namespace WindowsFormsApplication2.contract
         /// </summary>
         public const int port = 1500;
 
+
+
+
     }
 }

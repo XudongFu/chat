@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.Net.Sockets;
 using System.Net;
 using WindowsFormsApplication2.contract;
-namespace WindowsFormsApplication2.core
+namespace WindowsFormsApplication2.dataEntry
 {
     class listen:IDisposable
     {
