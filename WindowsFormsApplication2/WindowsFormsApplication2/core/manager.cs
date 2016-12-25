@@ -6,28 +6,53 @@ using System.Threading;
 using chat = WindowsFormsApplication2.contract;
 using System.Collections.Concurrent;
 using WindowsFormsApplication2.dataEntry;
+using WindowsFormsApplication2.data;
+using WindowsFormsApplication2.contract;
+using System.Xml;
 namespace WindowsFormsApplication2.dataEntry
 {
     class manager
     {
+
+        /// <summary>
+        /// 耗时的操作，需要很多的时间完成
+        /// </summary>
+        userList userManager;
+
+        groupList groupManager;
+
+
+
         Thread receiveMessage;
         Thread solveMessages;
         
 
-        ConcurrentQueue<chat::message> messages = new ConcurrentQueue<chat.message>();
+        ConcurrentQueue<message> messages = new ConcurrentQueue<chat.message>();
 
         ConcurrentDictionary<uint, user> onlineUser = new ConcurrentDictionary<uint, user>();
 
         ConcurrentDictionary<uint, group> groups = new ConcurrentDictionary<uint, group>();
 
-        void solveMessage(chat::message mess)
+
+        void inite()
+        {
+            userManager = new userList();
+            groupManager = new groupList();
+        }
+
+
+
+        void solveMessage(message mess)
         {
             switch (mess.getAction())
             {
-
-
-
-
+                //用户登录
+                case actionConst.signOn:
+                    XmlNode node = mess.value;
+                    uint id = uint.Parse(node.SelectSingleNode("id").Value);
+                    string passcode = node.SelectSingleNode("password").Value;
+                    mess.sendConfirm(userManager.comfirmUser(id,passcode));
+                    break;
                 default:
                     break;
 
@@ -39,6 +64,8 @@ namespace WindowsFormsApplication2.dataEntry
 
         void mainfunction()
         {
+            inite();
+
 
 
 

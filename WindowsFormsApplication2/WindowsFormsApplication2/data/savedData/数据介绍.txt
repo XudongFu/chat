@@ -1,6 +1,6 @@
 user –≈œ¢±Ì
 
-id userName sex birthDay   where  company colloge qianming
+id userName sex birthDay   where  company colloge qianming password
 
 group
  id name creatTime qianming
@@ -8,3 +8,4 @@ group
 
  groupEntry
  groupId userId
+

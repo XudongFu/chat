@@ -104,6 +104,9 @@
     <Content Include="data\savedData\groupEntry.txt" />
     <Content Include="data\savedData\user.txt" />
     <Content Include="data\savedData\数据介绍.txt" />
+    <Content Include="XMLFile1.xml">
+      <SubType>Designer</SubType>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

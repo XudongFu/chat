@@ -20,8 +20,6 @@ namespace WindowsFormsApplication2.dataEntry
         {
 
         }
-
-       
-
+        
     }
 }

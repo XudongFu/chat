@@ -1,0 +1,64 @@
+﻿<?xml version="1.0" encoding="utf-8" ?> 
+<!-- 登陆动作的消息-->
+<root>
+<message>
+  <action>signOn</action>
+  <th></th>
+  <value>
+    <id></id>
+    <password></password>
+  </value>
+</message>
+  
+  <!--注册-->
+  <message>
+    <action>signIn</action>
+    <th></th>
+    <value>
+      <name></name>
+      <sex></sex>
+      <birthday></birthday>
+      <colloge></colloge>
+      <company></company>
+      <password></password>
+    </value>
+  </message>
+
+<!--退出-->
+<message>
+  <action>signOff</action>
+  <th></th>
+  <value>
+    <id></id>
+    <password></password>
+  </value>
+</message>
+
+  <!--消息  发送给用户-->
+  <message>
+    <action>communication</action>
+    <th></th>
+    <value>
+      <from></from>
+      <toUser></toUser>
+      <message></message>
+    </value>
+  </message>
+
+  <!--消息  发送给用户-->
+  <message>
+    <action>communication</action>
+    <th></th>
+    <value>
+      <from></from>
+      <toGroup></toGroup>
+      <message></message>
+    </value>
+  </message>
+
+
+  <confirm>
+    <th></th>
+    <value></value>
+  </confirm>
+</root>

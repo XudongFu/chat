@@ -8,8 +8,16 @@ namespace WindowsFormsApplication2.contract
 {
     static class actionConst
     {
+
+        public const string connect = "";
+
         /// <summary>
         /// 登陆
+        /// </summary>
+        public const string signOn = "signIn";
+
+        /// <summary>
+        /// 注册
         /// </summary>
         public const string signIn = "signIn";
 
