@@ -5,6 +5,7 @@
   <action>signOn</action>
   <th></th>
   <value>
+    <clientType></clientType>
     <id></id>
     <password></password>
   </value>
@@ -27,6 +28,7 @@
 <!--退出-->
 <message>
   <action>signOff</action>
+  <clientType></clientType>
   <th></th>
   <value>
     <id></id>

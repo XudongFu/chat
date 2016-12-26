@@ -3,7 +3,6 @@ using System.Threading;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using chat = WindowsFormsApplication2.contract;
 using System.Collections.Concurrent;
 using WindowsFormsApplication2.data;
@@ -29,7 +28,7 @@ namespace WindowsFormsApplication2.dataEntry
 
         ConcurrentQueue<message> messages = new ConcurrentQueue<chat.message>();
 
-        ConcurrentDictionary<uint, user> onlineUser = new ConcurrentDictionary<uint, user>();
+        Dictionary<uint, user> onlineUser = new Dictionary<uint, user>();
 
         void inite()
         {
@@ -49,14 +48,22 @@ namespace WindowsFormsApplication2.dataEntry
                     XmlNode node = mess.value;
                     uint id = uint.Parse(node.SelectSingleNode("id").Value);
                     string passcode = node.SelectSingleNode("password").Value;
+                    string clientType = node.SelectSingleNode("clientType").Value;
                     if (userManager.comfirmUser(id, passcode))
                     {
                         user us = userManager.getUser(id);
-
-                        //需要对us的设备进行添加
-
                         mess.sendConfirm(true);
-                        onlineUser.TryAdd(id,us);
+
+                        try
+                        {
+                            onlineUser.Add(id, us);
+                        }
+                        catch (ArgumentException e)
+                        {
+                            device shebei = new device(mess.socket,device.getType(clientType));
+                            onlineUser[id].devices.Add(shebei);
+                        }
+
                     }
                     else
                     {
@@ -77,6 +84,32 @@ namespace WindowsFormsApplication2.dataEntry
                     break;
                 case actionConst.signOff:
 
+                    XmlNode offInfor = mess.value;
+                    uint userId = uint.Parse(offInfor.SelectSingleNode("id").Value);
+                    string pass = offInfor.SelectSingleNode("password").Value;
+                    string client = offInfor.SelectSingleNode("clientType").Value;
+                    device she = new device(mess.socket,device.getType(client));
+                    bool userIsOnline = false;
+                    try {
+                        user u = onlineUser[userId];
+                        userIsOnline = true;
+                    }
+                    catch(KeyNotFoundException e)
+                    {
+
+                    }
+                    if (userManager.comfirmUser(userId, pass) && userIsOnline)
+                    {
+                        try
+                        {
+                            onlineUser[userId].devices.Remove(she);
+                        }
+                        catch (Exception e)
+                        {
+
+                        }
+                    }
+                   
                     break;
 
                 case actionConst.communication:
@@ -97,19 +130,18 @@ namespace WindowsFormsApplication2.dataEntry
 
             }
         }
-
-
-
+        
 
         void mainfunction()
         {
             inite();
-
-
-
-
         }
 
+
+        bool UserIsOnline(uint id)
+        {
+            return false;
+        }
 
 
     }

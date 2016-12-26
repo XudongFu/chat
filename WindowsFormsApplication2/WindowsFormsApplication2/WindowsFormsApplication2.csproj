@@ -55,6 +55,7 @@
     <Compile Include="contract\actionConst.cs" />
     <Compile Include="contract\message.cs" />
     <Compile Include="contract\solveMessge.cs" />
+    <Compile Include="core\communication.cs" />
     <Compile Include="core\device.cs" />
     <Compile Include="core\listen.cs" />
     <Compile Include="core\manager.cs" />

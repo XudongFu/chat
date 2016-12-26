@@ -8,15 +8,19 @@ namespace WindowsFormsApplication2.dataEntry
 {
     class user
     {
-        List<device> devices = new List<device>();
-        string name;
-        uint id;
-        string sex;
-        string colloge;
-        string commany;
-        DateTime birthday;
+        public  List<device> devices = new List<device>();
+        public string name;
+        public uint id;
+        public string sex;
+        public string colloge;
+        public string commany;
+        public DateTime birthday;
 
-        user()
+
+
+
+
+        public  user()
         {
 
         }
