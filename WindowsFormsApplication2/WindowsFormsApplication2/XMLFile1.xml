@@ -56,9 +56,17 @@
     </value>
   </message>
 
-
+<!--消息确认-->
   <confirm>
     <th></th>
     <value></value>
   </confirm>
+
+
+<!--数据请求-->
+  <requestForData>
+    <type></type>
+    <value></value>
+  </requestForData>
+
 </root>

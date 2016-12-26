@@ -14,7 +14,7 @@ namespace WindowsFormsApplication2.contract
         /// <summary>
         /// 登陆
         /// </summary>
-        public const string signOn = "signIn";
+        public const string signOn = "signOn";
 
         /// <summary>
         /// 注册

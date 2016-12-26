@@ -62,6 +62,11 @@ namespace WindowsFormsApplication2.data
 
         }
 
+        public user getUser(uint id)
+        {
+            return null;
+        }
+
         public bool comfirmUser(uint id,string password)
         {
             try {
@@ -96,5 +101,12 @@ namespace WindowsFormsApplication2.data
 
 
         }
+
+
+        public uint getFreeId()
+        {
+            return 0;
+        }
+
     }
 }

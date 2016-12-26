@@ -1,11 +1,11 @@
 ﻿using System;
+using System.Threading;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading;
+using System.Threading.Tasks;
 using chat = WindowsFormsApplication2.contract;
 using System.Collections.Concurrent;
-using WindowsFormsApplication2.dataEntry;
 using WindowsFormsApplication2.data;
 using WindowsFormsApplication2.contract;
 using System.Xml;
@@ -31,9 +31,6 @@ namespace WindowsFormsApplication2.dataEntry
 
         ConcurrentDictionary<uint, user> onlineUser = new ConcurrentDictionary<uint, user>();
 
-        ConcurrentDictionary<uint, group> groups = new ConcurrentDictionary<uint, group>();
-
-
         void inite()
         {
             userManager = new userList();
@@ -48,10 +45,52 @@ namespace WindowsFormsApplication2.dataEntry
             {
                 //用户登录
                 case actionConst.signOn:
+                    #region
                     XmlNode node = mess.value;
                     uint id = uint.Parse(node.SelectSingleNode("id").Value);
                     string passcode = node.SelectSingleNode("password").Value;
-                    mess.sendConfirm(userManager.comfirmUser(id,passcode));
+                    if (userManager.comfirmUser(id, passcode))
+                    {
+                        user us = userManager.getUser(id);
+
+                        //需要对us的设备进行添加
+
+                        mess.sendConfirm(true);
+                        onlineUser.TryAdd(id,us);
+                    }
+                    else
+                    {
+                        mess.sendConfirm(false);
+                    }
+
+                    break;
+                    #endregion
+                case actionConst.signIn:
+                    XmlNode signInInfor = mess.value;
+                    string name = signInInfor.SelectSingleNode("name").Value;
+                    string sex= signInInfor.SelectSingleNode("sex").Value;
+                    DateTime time = DateTime.Parse( signInInfor.SelectSingleNode("birthDay").Value);
+                    string company= signInInfor.SelectSingleNode("company").Value;
+                    string colloge= signInInfor.SelectSingleNode("colloge").Value;
+                    userManager.addUser(userManager.getFreeId(), name, sex,time,"", colloge,"", company);
+
+                    break;
+                case actionConst.signOff:
+
+                    break;
+
+                case actionConst.communication:
+
+                    XmlNode comminfo = mess.value;
+                    uint fromId = uint.Parse(comminfo.SelectSingleNode("from").Value);
+                    try {
+                      user us=  onlineUser[fromId];
+
+                    }
+                    catch (KeyNotFoundException e)
+                    {
+
+                    }
                     break;
                 default:
                     break;
