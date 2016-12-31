@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.IO;
 using System.Text;
 using System.Threading.Tasks;
 using WindowsFormsApplication2.dataEntry;
+using WindowsFormsApplication2.core;
 namespace WindowsFormsApplication2.data
 {
 
@@ -12,7 +14,9 @@ namespace WindowsFormsApplication2.data
     /// </summary>
     class groupList
     {
-        struct groupdata
+        char table = '\t';
+
+        class groupdata
         {
             public groupdata(uint id,string name,DateTime createdTime,string description)
             {
@@ -27,6 +31,8 @@ namespace WindowsFormsApplication2.data
             public  DateTime createdTime;
             public  List<uint> userId;
             public  string description;
+            public List<communication> comms = new List<communication>();
+
         }
 
         string groupPath = "./savedData/group.txt";
@@ -74,7 +80,24 @@ namespace WindowsFormsApplication2.data
 
         void saveChangeToFile()
         {
+            var groupStream = File.Open(groupPath, FileMode.Create);
+            var entryStream = File.Open(groupEntryPath, FileMode.Create);
+            foreach (var p in groups.ToArray().OrderBy(o=>o.Key))
+            {
+                byte[] data = ASCIIEncoding.Unicode.GetBytes(p.Value.id +table+ p.Value.name + table + p.Value.createdTime + table + p.Value.description);
+                groupStream.Write(data,0,data.Length);
 
+                foreach (var user in p.Value.userId)
+                {
+                    byte[] userData = ASCIIEncoding.Unicode.GetBytes(p.Key.ToString()+table+user.ToString());
+                    entryStream.Write(userData,0,userData.Length);
+                }
+            }
+            groupStream.Flush();
+            entryStream.Flush();
+            groupStream.Close();
+            entryStream.Close();
+            
         }
 
         void addGroup()

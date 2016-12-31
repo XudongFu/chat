@@ -4,10 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Net.Sockets;
+using WindowsFormsApplication2.core;
+
 
 namespace WindowsFormsApplication2.dataEntry
 {
-    enum deviceType
+ public   enum deviceType
     {
         web,
         android,
@@ -16,7 +18,7 @@ namespace WindowsFormsApplication2.dataEntry
     }
 
 
-    class device
+ public    class device
     {
           Socket socket;
           deviceType type;
@@ -31,8 +33,14 @@ namespace WindowsFormsApplication2.dataEntry
         {
             device shebei = obj as device;
             return this.socket == shebei.socket && type == shebei.type;
-            
-            return base.Equals(obj);
+           
+        }
+
+
+        public void sendMessage(communication com)
+        {
+
+
         }
 
         public   static deviceType getType(string type)
@@ -55,7 +63,6 @@ namespace WindowsFormsApplication2.dataEntry
                 default:
                     shebei = deviceType.android;
                     break;
-
             }
             return shebei;
 

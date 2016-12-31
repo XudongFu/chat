@@ -5,43 +5,53 @@ using System.Text;
 using System.Threading.Tasks;
 using WindowsFormsApplication2.dataEntry;
 using WindowsFormsApplication2.data;
+using WindowsFormsApplication2.core;
+using System.IO;
 namespace WindowsFormsApplication2.data
 {
-    class userList
+
+   public  class userdata
+    {
+        public userdata(uint id, string userName,
+            string sex, DateTime time, string place,
+            string company, string colloge, string sign, string pass)
+        {
+            this.id = id;
+            this.userName = userName;
+            this.sex = sex;
+            this.birthday = time;
+            this.place = place;
+            this.commany = company;
+            this.colloge = colloge;
+            this.sign = sign;
+            password = pass;
+        }
+        public uint id;
+        public string userName;
+        public string sex;
+        public DateTime birthday;
+        public string place;
+        public string colloge;
+        public string sign;
+        public string commany;
+        public string password;
+        /// <summary>
+        /// 接受的消息缓存
+        /// </summary>
+        public Queue<communication> notReadMess = new Queue<communication>();
+
+        public List<communication> readMess = new List<communication>();
+
+
+
+    }
+
+    public  class userList
     {
         string path = "/.savedData/user.txt";
 
         Dictionary<uint, userdata> users = new Dictionary<uint, userdata>();
-
-        struct userdata
-        {
-            public userdata(uint id,string userName,
-                string sex,DateTime time,string place,
-                string company,string colloge,string sign,string pass )
-            {
-                this.id = id;
-                this.userName = userName;
-                this.sex = sex;
-                this.birthday = time;
-                this.place = place;
-                this.commany = company;
-                this.colloge = colloge;
-                this.sign = sign;
-                password = pass;
-            }
-
-            public uint id;
-            public string userName;
-            public string sex;
-            public DateTime birthday;
-            public string place;
-            public string colloge;
-            public string sign;
-            public string commany;
-            public string password;
-
-        }
-
+        
        public  userList()
         {
             praseTxt prase = new praseTxt(path);
@@ -56,15 +66,20 @@ namespace WindowsFormsApplication2.data
             }
             catch (Exception e)
             {
-
             }
             
-
         }
 
-        public user getUser(uint id)
+        public userdata getUser(uint id)
         {
-            return null;
+            if (users.ContainsKey(id))
+            {
+                return users[id];
+            }
+            else
+            {
+                return null;
+            }
         }
 
         public bool comfirmUser(uint id,string password)
@@ -80,10 +95,29 @@ namespace WindowsFormsApplication2.data
             }
         }
 
+       
+
+        char table = '\t';
         public  void saveChangeToFile()
         {
-            
+            var userStream = File.Open(path, FileMode.Create);
+            foreach (var x in users.ToArray() )
+            {
+                byte[] data = ASCIIEncoding.Unicode.GetBytes(
+                    x.Value.id.ToString() + table
+                    + x.Value.userName + table
+                    + x.Value.sex + table
+                    + x.Value.birthday + table
+                    + x.Value.place + table
+                    + x.Value.colloge + table
+                    + x.Value.sign + table
+                    + x.Value.commany + table
+                    + x.Value.password);
+                userStream.Write(data,0,data.Length);
 
+            }
+            userStream.Flush();
+            userStream.Close();
         }
         public  void addUser(uint id,string userName,string sex,DateTime birthday,
             string place,string colloge,string sign,string commany)
@@ -103,7 +137,7 @@ namespace WindowsFormsApplication2.data
         }
 
 
-        public uint getFreeId()
+        public static uint getFreeId()
         {
             return 0;
         }

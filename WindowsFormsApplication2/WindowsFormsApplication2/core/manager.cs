@@ -8,11 +8,11 @@ using System.Collections.Concurrent;
 using WindowsFormsApplication2.data;
 using WindowsFormsApplication2.contract;
 using System.Xml;
+using WindowsFormsApplication2.core;
 namespace WindowsFormsApplication2.dataEntry
 {
     class manager
     {
-
         /// <summary>
         /// 耗时的操作，需要很多的时间完成
         /// </summary>
@@ -20,12 +20,9 @@ namespace WindowsFormsApplication2.dataEntry
 
         groupList groupManager;
 
-
-
         Thread receiveMessage;
         Thread solveMessages;
         
-
         ConcurrentQueue<message> messages = new ConcurrentQueue<chat.message>();
 
         Dictionary<uint, user> onlineUser = new Dictionary<uint, user>();
@@ -35,7 +32,6 @@ namespace WindowsFormsApplication2.dataEntry
             userManager = new userList();
             groupManager = new groupList();
         }
-
 
 
         void solveMessage(message mess)
@@ -63,15 +59,15 @@ namespace WindowsFormsApplication2.dataEntry
                             device shebei = new device(mess.socket,device.getType(clientType));
                             onlineUser[id].devices.Add(shebei);
                         }
-
                     }
                     else
                     {
                         mess.sendConfirm(false);
                     }
-
                     break;
                     #endregion
+
+                    //用户注册
                 case actionConst.signIn:
                     XmlNode signInInfor = mess.value;
                     string name = signInInfor.SelectSingleNode("name").Value;
@@ -79,9 +75,10 @@ namespace WindowsFormsApplication2.dataEntry
                     DateTime time = DateTime.Parse( signInInfor.SelectSingleNode("birthDay").Value);
                     string company= signInInfor.SelectSingleNode("company").Value;
                     string colloge= signInInfor.SelectSingleNode("colloge").Value;
-                    userManager.addUser(userManager.getFreeId(), name, sex,time,"", colloge,"", company);
+                    userManager.addUser(userList.getFreeId(), name, sex,time,"", colloge,"", company);
 
                     break;
+                    //用户退出
                 case actionConst.signOff:
 
                     XmlNode offInfor = mess.value;
@@ -103,6 +100,8 @@ namespace WindowsFormsApplication2.dataEntry
                         try
                         {
                             onlineUser[userId].devices.Remove(she);
+                            if (onlineUser[userId].devices.Count == 0)
+                                onlineUser.Remove(userId);
                         }
                         catch (Exception e)
                         {
@@ -112,18 +111,18 @@ namespace WindowsFormsApplication2.dataEntry
                    
                     break;
 
-                case actionConst.communication:
+                case actionConst.communication:                   
+                    communication com = communication.prase(mess.value);
 
-                    XmlNode comminfo = mess.value;
-                    uint fromId = uint.Parse(comminfo.SelectSingleNode("from").Value);
-                    try {
-                      user us=  onlineUser[fromId];
-
-                    }
-                    catch (KeyNotFoundException e)
+                    if (onlineUser.ContainsKey(com.from))
                     {
 
                     }
+                    else
+                    {
+
+                    }
+                   
                     break;
                 default:
                     break;

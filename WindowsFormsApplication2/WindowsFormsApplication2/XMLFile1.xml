@@ -36,24 +36,15 @@
   </value>
 </message>
 
+ 
   <!--消息  发送给用户-->
   <message>
     <action>communication</action>
     <th></th>
     <value>
       <from></from>
-      <toUser></toUser>
-      <message></message>
-    </value>
-  </message>
-
-  <!--消息  发送给用户-->
-  <message>
-    <action>communication</action>
-    <th></th>
-    <value>
-      <from></from>
-      <toGroup></toGroup>
+      <type>user/group</type>
+      <to></to>
       <message></message>
     </value>
   </message>
