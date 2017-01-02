@@ -7,10 +7,10 @@ using System.Threading.Tasks;
 using System.Net.Sockets;
 namespace WindowsFormsApplication2.contract
 {
-   public  abstract class message
+   public  class message
     {
-        
 
+        string xmlString;
         string actionType;
         public XmlNode value;
         public  Socket socket;
@@ -19,15 +19,21 @@ namespace WindowsFormsApplication2.contract
         /// </summary>
         public  int th;
 
-        message(string xml,Socket socket)
+        public  message(string xml,Socket socket)
         {
             this.socket = socket;
+            xmlString = xml;
             XmlDocument doc = new  XmlDocument();
             doc.LoadXml(xml);
             XmlNode message = doc.SelectSingleNode("message");
             th = int.Parse(message.SelectSingleNode("th").Value);
             actionType = message.SelectSingleNode("actione").Value;
             value = message.SelectSingleNode("value");
+        }
+
+        public  message()
+        {
+
         }
 
 
@@ -85,7 +91,11 @@ namespace WindowsFormsApplication2.contract
         }
 
 
-       public  abstract string ToXml();
+       public   string ToXml()
+        {
+            return xmlString;
+
+        }
 
     }
 }

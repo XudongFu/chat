@@ -10,10 +10,10 @@ using System.IO;
 namespace WindowsFormsApplication2.data
 {
 
-   public  class userdata
+    public class userdata
     {
         public userdata(uint id, string userName,
-            string sex, DateTime time, string place,
+            string sex, string time, string place,
             string company, string colloge, string sign, string pass)
         {
             this.id = id;
@@ -29,7 +29,7 @@ namespace WindowsFormsApplication2.data
         public uint id;
         public string userName;
         public string sex;
-        public DateTime birthday;
+        public string birthday;
         public string place;
         public string colloge;
         public string sign;
@@ -46,28 +46,31 @@ namespace WindowsFormsApplication2.data
 
     }
 
-    public  class userList
+    public class userList
     {
-        string path = "/.savedData/user.txt";
+        string path = @"C:\个人文件\chat\WindowsFormsApplication2\WindowsFormsApplication2\data\savedData\user.txt";
 
         Dictionary<uint, userdata> users = new Dictionary<uint, userdata>();
-        
-       public  userList()
+
+        public userList()
         {
             praseTxt prase = new praseTxt(path);
 
             try
             {
-                List<string> temp = prase.getNextLine();
-                uint id = uint.Parse(temp[0]);
-                users.Add(id,new userdata(uint.Parse( temp[0]), temp[1], 
-                    temp[2],DateTime.Parse( temp[3]), temp[4], 
-                    temp[5], temp[6], temp[7],temp[8]));
+                while(true)
+                {
+                    List<string> temp = prase.getNextLine();
+                    uint id = uint.Parse(temp[0]);
+                    users.Add(id, new userdata(uint.Parse(temp[0]), temp[1],
+                    temp[2], temp[3], temp[4],
+                    temp[5], temp[6], temp[7], temp[8]));
+                }
             }
-            catch (Exception e)
+            catch (EndOfStreamException e)
             {
             }
-            
+            prase.close();
         }
 
         public userdata getUser(uint id)
@@ -82,9 +85,10 @@ namespace WindowsFormsApplication2.data
             }
         }
 
-        public bool comfirmUser(uint id,string password)
+        public bool comfirmUser(uint id, string password)
         {
-            try {
+            try
+            {
                 if (users[id].password == password)
                     return true;
                 return false;
@@ -95,42 +99,44 @@ namespace WindowsFormsApplication2.data
             }
         }
 
-       
+
 
         char table = '\t';
-        public  void saveChangeToFile()
+        public void saveChangeToFile()
         {
             var userStream = File.Open(path, FileMode.Create);
-            foreach (var x in users.ToArray() )
+            foreach (var x in users.ToArray())
             {
-                byte[] data = ASCIIEncoding.Unicode.GetBytes(
+                byte[] data = ASCIIEncoding.UTF8.GetBytes(
                     x.Value.id.ToString() + table
                     + x.Value.userName + table
                     + x.Value.sex + table
                     + x.Value.birthday + table
                     + x.Value.place + table
+                     + x.Value.commany + table
                     + x.Value.colloge + table
                     + x.Value.sign + table
-                    + x.Value.commany + table
-                    + x.Value.password);
-                userStream.Write(data,0,data.Length);
+                    + x.Value.password+"\r\n");
+                userStream.Write(data, 0, data.Length);
 
             }
             userStream.Flush();
             userStream.Close();
         }
-        public  void addUser(uint id,string userName,string sex,DateTime birthday,
-            string place,string colloge,string sign,string commany)
+        public uint addUser(userdata user)
+        {
+            uint id=getFreeId();
+            user.id = id;
+            users.Add(id, user);
+            return id;
+        }
+
+        public void deleteUser(uint id)
         {
 
         }
 
-        public   void deleteUser(uint id)
-        {
-
-        }
-
-         public  void addGroup()
+        public void addGroup()
         {
 
 
@@ -139,7 +145,7 @@ namespace WindowsFormsApplication2.data
 
         public static uint getFreeId()
         {
-            return 0;
+            return (uint)(DateTime.Now.Day * DateTime.Now.Millisecond * DateTime.Now.Day);
         }
 
     }

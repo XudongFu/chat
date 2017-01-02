@@ -1,0 +1,13 @@
+692	fuxudong	男	2017/1/1 22:44:03	深圳	kingdee	ahu	free	pass
+115	fuxudong	男	2017/1/1 22:44:04	深圳	kingdee	ahu	free	pass
+613	fuxudong	男	2017/1/1 22:44:04	深圳	kingdee	ahu	free	pass
+27	fuxudong	男	2017/1/1 22:44:05	深圳	kingdee	ahu	free	pass
+645	fuxudong	男	2017/1/1 22:44:05	深圳	kingdee	ahu	free	pass
+58	fuxudong	男	2017/1/1 22:44:06	深圳	kingdee	ahu	free	pass
+555	fuxudong	男	2017/1/1 22:44:06	深圳	kingdee	ahu	free	pass
+77	fuxudong	男	2017/1/1 22:44:07	深圳	kingdee	ahu	free	pass
+729	fuxudong	男	2017/1/1 22:44:26	深圳	kingdee	ahu	free	pass
+235	fuxudong	男	2017/1/1 22:44:27	深圳	kingdee	ahu	free	pass
+718	fuxudong	男	2017/1/1 22:44:27	深圳	kingdee	ahu	free	pass
+315	fuxudong	男	2017/1/1 22:44:28	深圳	kingdee	ahu	free	pass
+694	fuxudong	男	2017/1/1 22:44:28	深圳	kingdee	ahu	free	pass

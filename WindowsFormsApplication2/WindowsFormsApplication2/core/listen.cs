@@ -6,27 +6,30 @@ using System.Threading.Tasks;
 using System.Net.Sockets;
 using System.Net;
 using WindowsFormsApplication2.contract;
+using System.Collections.Concurrent;
+
 namespace WindowsFormsApplication2.dataEntry
 {
-    class listen:IDisposable
+   public class listen:IDisposable
     {
         Socket receiveSocket;
 
-        listen()
+       public  listen()
         {
             receiveSocket = new Socket(SocketType.Rdm, ProtocolType.Udp);
             IPEndPoint local = new IPEndPoint(IPAddress.Loopback, actionConst.port);
             receiveSocket.Bind(local);
             receiveSocket.Listen(500);
         }
-         message getNextMessage()
+       public   void getNextMessage(object queue)
         {
+            ConcurrentQueue<message> con=(ConcurrentQueue<message>)queue;
             Socket remote = receiveSocket.Accept();
-            
-
-
-
-            return null;
+            byte[] data = new byte[2048];
+            remote.Receive(data);
+            string str = ASCIIEncoding.Unicode.GetString(data);
+            message message = new message(str,remote);
+            con.Enqueue(message);
         }
 
         #region IDisposable Support
@@ -62,9 +65,6 @@ namespace WindowsFormsApplication2.dataEntry
             Dispose(true);
             // TODO: 如果在以上内容中替代了终结器，则取消注释以下行。
             // GC.SuppressFinalize(this);
-
-
-
         }
         #endregion
 

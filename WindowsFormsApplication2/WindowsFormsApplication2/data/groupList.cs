@@ -35,9 +35,9 @@ namespace WindowsFormsApplication2.data
 
         }
 
-        string groupPath = "./savedData/group.txt";
+        string groupPath = @"C:\个人文件\chat\WindowsFormsApplication2\WindowsFormsApplication2\data\savedData\group.txt";
 
-        string groupEntryPath = "./savedData/groupEntry.txt";
+        string groupEntryPath = @"C:\个人文件\chat\WindowsFormsApplication2\WindowsFormsApplication2\data\savedData\groupEntry.txt";
 
         Dictionary<uint, groupdata> groups = new Dictionary<uint, groupdata>();
 
@@ -75,6 +75,7 @@ namespace WindowsFormsApplication2.data
             {
 
             }
+            prase.close();
         }
 
 
@@ -84,7 +85,7 @@ namespace WindowsFormsApplication2.data
             var entryStream = File.Open(groupEntryPath, FileMode.Create);
             foreach (var p in groups.ToArray().OrderBy(o=>o.Key))
             {
-                byte[] data = ASCIIEncoding.Unicode.GetBytes(p.Value.id +table+ p.Value.name + table + p.Value.createdTime + table + p.Value.description);
+                byte[] data = ASCIIEncoding.UTF8.GetBytes(p.Value.id +table+ p.Value.name + table + p.Value.createdTime + table + p.Value.description);
                 groupStream.Write(data,0,data.Length);
 
                 foreach (var user in p.Value.userId)
@@ -97,7 +98,6 @@ namespace WindowsFormsApplication2.data
             entryStream.Flush();
             groupStream.Close();
             entryStream.Close();
-            
         }
 
         void addGroup()

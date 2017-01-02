@@ -4,3 +4,8 @@ C:\个人文件\chat\WindowsFormsApplication2\WindowsFormsApplication2\obj\Debug
 C:\个人文件\chat\WindowsFormsApplication2\WindowsFormsApplication2\obj\Debug\WindowsFormsApplication2.server.resources
 C:\个人文件\chat\WindowsFormsApplication2\WindowsFormsApplication2\obj\Debug\WindowsFormsApplication2.Properties.Resources.resources
 C:\个人文件\chat\WindowsFormsApplication2\WindowsFormsApplication2\obj\Debug\WindowsFormsApplication2.csproj.GenerateResource.Cache
+C:\个人文件\chat\WindowsFormsApplication2\WindowsFormsApplication2\obj\Debug\WindowsFormsApplication2.test.resources
+C:\个人文件\chat\WindowsFormsApplication2\WindowsFormsApplication2\bin\Debug\WindowsFormsApplication2.exe
+C:\个人文件\chat\WindowsFormsApplication2\WindowsFormsApplication2\bin\Debug\WindowsFormsApplication2.pdb
+C:\个人文件\chat\WindowsFormsApplication2\WindowsFormsApplication2\obj\Debug\WindowsFormsApplication2.exe
+C:\个人文件\chat\WindowsFormsApplication2\WindowsFormsApplication2\obj\Debug\WindowsFormsApplication2.pdb
