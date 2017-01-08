@@ -30,10 +30,10 @@ namespace WindowsFormsApplication2.core
 
         public static communication prase(XmlNode comminfo)
         {
-            uint fromId = uint.Parse(comminfo.SelectSingleNode("from").Value);
-            uint to = uint.Parse(comminfo.SelectSingleNode("to").Value);
-            string type = comminfo.SelectSingleNode("type").Value;
-            string value = comminfo.SelectSingleNode("message").Value;
+            uint fromId = uint.Parse(comminfo.SelectSingleNode("from").InnerText);
+            uint to = uint.Parse(comminfo.SelectSingleNode("to").InnerText);
+            string type = comminfo.SelectSingleNode("type").InnerText;
+            string value = comminfo.SelectSingleNode("message").InnerText;
             communication com = new communication(fromId, to, type, value);
             return com;
         }

@@ -50,6 +50,9 @@ namespace WindowsFormsApplication2.dataEntry
                 de.sendMessage(com);
             }
         }
+
+
+
         
     }
 }

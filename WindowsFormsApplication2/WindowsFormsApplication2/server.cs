@@ -15,21 +15,37 @@ namespace WindowsFormsApplication2
 
         manager control;
 
+        delegate void showMessage(string str);
+
         public server()
         {
             InitializeComponent();
-            control = new manager();
         }
+
+        showMessage show;
 
         private void inite_Click(object sender, EventArgs e)
         {
-            control.initeServer();
-            control.doIt();
+            control.initeServer(this);
+
+            control.doIt(this);
         }
 
+        private void server_Load(object sender, EventArgs e)
+        {
+            control = new manager(this);
+            show = showText;
+        }
 
-
-
+        public  void showText(string str)
+        {
+            if (textBox1.InvokeRequired)
+            {
+                textBox1.Invoke(show, str);
+            }
+            else
+                textBox1.Text += str+"\r\n";
+        }
 
     }
 }

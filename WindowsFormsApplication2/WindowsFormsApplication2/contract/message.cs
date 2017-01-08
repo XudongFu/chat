@@ -19,6 +19,9 @@ namespace WindowsFormsApplication2.contract
         /// </summary>
         public  int th;
 
+        public int version;
+        public uint from;
+
         public  message(string xml,Socket socket)
         {
             this.socket = socket;
@@ -26,9 +29,16 @@ namespace WindowsFormsApplication2.contract
             XmlDocument doc = new  XmlDocument();
             doc.LoadXml(xml);
             XmlNode message = doc.SelectSingleNode("message");
-            th = int.Parse(message.SelectSingleNode("th").Value);
-            actionType = message.SelectSingleNode("actione").Value;
+            XmlElement mess = message as XmlElement;
+            th = int.Parse(message.SelectSingleNode("th").InnerText);
+            actionType = message.SelectSingleNode("action").InnerText;
             value = message.SelectSingleNode("value");
+
+            if (actionType==actionConst.dataRequest)
+            {
+                from= uint.Parse( message.SelectSingleNode("from").InnerText);
+                version= int.Parse(message.SelectSingleNode("version").InnerText);
+            }
         }
 
         public  message()
@@ -61,7 +71,6 @@ namespace WindowsFormsApplication2.contract
                 doc.LoadXml(succ);
                 string message = getComfirm(th, doc.SelectSingleNode("fail"));
                 sendStringToDevice(message);
-
             }
         }
 
@@ -69,25 +78,23 @@ namespace WindowsFormsApplication2.contract
         {
             XmlDocument doc = new XmlDocument();
             doc.LoadXml(@"<confirm><th></th><value></value></confirm>");
-
-            XmlNode confirm = doc.SelectSingleNode("cpnfirm");
+            XmlNode confirm = doc.SelectSingleNode("confirm");
             XmlNode xuhao = confirm.SelectSingleNode("th");
             XmlNode valu = confirm.SelectSingleNode("value");
-            xuhao.Value = th.ToString();
-            valu.AppendChild(value);
-            return confirm.ToString();
+            xuhao.InnerText = th.ToString();
+            //valu.AppendChild(value);
+            return confirm.OuterXml;
 
         }
 
 
-        void sendStringToDevice(string message)
+       public  void sendStringToDevice(string message)
         {
             if (socket.Connected)
             {
-                byte[] data = ASCIIEncoding.Unicode.GetBytes(message);
+                byte[] data = ASCIIEncoding.UTF8.GetBytes(message);
                 socket.Send(data);
             }
-
         }
 
 

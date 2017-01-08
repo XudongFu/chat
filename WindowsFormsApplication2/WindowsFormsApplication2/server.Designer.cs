@@ -70,6 +70,7 @@
             this.Controls.Add(this.inite);
             this.Name = "server";
             this.Text = "server";
+            this.Load += new System.EventHandler(this.server_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

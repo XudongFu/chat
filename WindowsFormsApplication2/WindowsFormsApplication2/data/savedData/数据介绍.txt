@@ -1,11 +1,15 @@
 user 信息表
 
-id userName sex birthDay   where  company colloge qianming password
+id userName sex birthDay   where  company colloge qianming password  version
 
+//这个代表的是群的信息
 group
  id name creatTime qianming
 
-
+ //群的具体内容
  groupEntry
  groupId userId
 
+
+ friends //代表用户的联系人信息
+ userId    friendId  version  condition//引用自user 信息表

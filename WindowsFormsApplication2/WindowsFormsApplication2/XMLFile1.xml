@@ -55,11 +55,61 @@
     <value></value>
   </confirm>
 
+  
+ <!--数据请求，好友和群组列表-->
+ <message>
+    <action>DataRequest</action>
+    <th></th>
+   <!--请求从哪个版本以来的所有数据-->
+   <version></version>
+   <from></from>
+ </message>
+  
+  
+  
+   <message>
+    <action>DataAnswer</action>
+    <th></th>
+    <value>
+      <!--changed 代表基本信息发生改变，add和deleted 分别代表用户的增添和删除 -->
+      <user  condition="add/deleted/changed"></user>
+      
+      <group condition="add/deleted/changed" ></group>
+      
+      <group>
+        <user  condition="add/deleted"></user>
+      </group>
+    
+    </value>
+  </message>
 
-<!--数据请求-->
-  <requestForData>
-    <type></type>
-    <value></value>
-  </requestForData>
+  
+  <!--请求用户信息-->
+   <message>
+      <action>userInfoUpdate</action>
+    <from></from>
+    <th></th>
+      <value>
+          <name></name>
+          <sex></sex>
+          <birthday></birthday>
+          <colloge></colloge>
+          <company></company>
+      </value>
+  </message>
+ 
+
+  
+  <!--请求群组信息-->
+  <message>
+      <action>userInfo</action>
+    <th></th>
+    <from></from>
+    <value>
+        
+    </value>
+  </message> 
+
+  
 
 </root>

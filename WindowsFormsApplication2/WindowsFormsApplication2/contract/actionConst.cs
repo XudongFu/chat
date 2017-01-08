@@ -38,7 +38,15 @@ namespace WindowsFormsApplication2.contract
         /// </summary>
         public const int port = 1500;
 
+        /// <summary>
+        /// 数据请求
+        /// </summary>
+        public const string dataRequest = "dataRequest";
 
+        /// <summary>
+        /// 数据答复
+        /// </summary>
+        public const string dataAnswer = "dataAnswer";
 
 
     }
