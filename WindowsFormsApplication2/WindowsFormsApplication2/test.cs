@@ -25,7 +25,7 @@ namespace WindowsFormsApplication2
         private void button1_Click(object sender, EventArgs e)
         {
             
-            userdata user = new userdata(0,"fuxudong","男",DateTime.Now.ToString(),"深圳","kingdee","ahu","free","pass");
+            userdata user = new userdata(0,"fuxudong","男",DateTime.Now.ToString(),"深圳","kingdee","ahu","free","pass",1);
             showText( list.addUser(user).ToString());
             list.saveChangeToFile();
 

@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Net.Sockets;
+using System.Net;
 using WindowsFormsApplication2.core;
-
+using System.Net.Sockets;
 
 namespace WindowsFormsApplication2.dataEntry
 {
@@ -20,11 +20,11 @@ namespace WindowsFormsApplication2.dataEntry
 
  public    class device
     {
-          Socket socket;
+        IPEndPoint point;
           deviceType type;
-       public  device(Socket socket,deviceType type)
+       public  device(IPEndPoint ippoint,deviceType type)
         {
-            this.socket = socket;
+            this.point = ippoint;
             this.type = type;
         }
 
@@ -32,7 +32,7 @@ namespace WindowsFormsApplication2.dataEntry
         public override bool Equals(object obj)
         {
             device shebei = obj as device;
-            return this.socket == shebei.socket && type == shebei.type;
+            return this.point == shebei.point && type == shebei.type;
            
         }
 

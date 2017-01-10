@@ -5,6 +5,8 @@ using System.Xml;
 using System.Text;
 using System.Threading.Tasks;
 using System.Net.Sockets;
+using System.Net;
+using WindowsFormsApplication2.core;
 namespace WindowsFormsApplication2.contract
 {
    public  class message
@@ -13,7 +15,7 @@ namespace WindowsFormsApplication2.contract
         string xmlString;
         string actionType;
         public XmlNode value;
-        public  Socket socket;
+        public IPEndPoint point;
         /// <summary>
         /// 消息的序列号
         /// </summary>
@@ -22,9 +24,9 @@ namespace WindowsFormsApplication2.contract
         public int version;
         public uint from;
 
-        public  message(string xml,Socket socket)
+        public  message(string xml, IPEndPoint ippoint)
         {
-            this.socket = socket;
+            this.point = ippoint;
             xmlString = xml;
             XmlDocument doc = new  XmlDocument();
             doc.LoadXml(xml);
@@ -90,18 +92,13 @@ namespace WindowsFormsApplication2.contract
 
        public  void sendStringToDevice(string message)
         {
-            if (socket.Connected)
-            {
-                byte[] data = ASCIIEncoding.UTF8.GetBytes(message);
-                socket.Send(data);
-            }
+            SendMessage.getInstance().sendMessage(this);
         }
 
 
        public   string ToXml()
         {
             return xmlString;
-
         }
 
     }

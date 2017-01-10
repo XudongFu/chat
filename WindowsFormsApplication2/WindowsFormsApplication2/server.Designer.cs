@@ -70,6 +70,8 @@
             this.Controls.Add(this.inite);
             this.Name = "server";
             this.Text = "server";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.server_FormClosing);
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.server_FormClosed);
             this.Load += new System.EventHandler(this.server_Load);
             this.ResumeLayout(false);
             this.PerformLayout();

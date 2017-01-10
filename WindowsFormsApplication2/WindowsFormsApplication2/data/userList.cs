@@ -79,8 +79,10 @@ namespace WindowsFormsApplication2.data
     public class userList
     {
         string path = @"C:\个人文件\chat\WindowsFormsApplication2\WindowsFormsApplication2\data\savedData\user.txt";
-
         string fls = @"C:\个人文件\chat\WindowsFormsApplication2\WindowsFormsApplication2\data\savedData\friends.txt";
+
+        //string path = @".\savedData\user.txt";
+        //string fls = @".\savedData\friends.txt";
 
         public  Dictionary<uint, userdata> users = new Dictionary<uint, userdata>();
 

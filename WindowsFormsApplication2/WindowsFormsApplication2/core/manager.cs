@@ -18,18 +18,19 @@ namespace WindowsFormsApplication2.core
         /// </summary>
         userList userManager;
         groupList groupManager;
-        Thread receiveMessage;
-        Thread solveMessages;
+        public Thread receiveMessage;
+        public Thread solveMessages;
         server ser;
         ConcurrentQueue<message> messages = new ConcurrentQueue<chat.message>();
 
         Dictionary<uint, user> onlineUser = new Dictionary<uint, user>();
 
-        listen listen = new listen();
+        listen listen;
 
         public manager(server ser)
         {
             this.ser = ser;
+            listen = new listen(ser);
         }
 
 
@@ -64,7 +65,7 @@ namespace WindowsFormsApplication2.core
                         }
                         catch (ArgumentException e)
                         {
-                            device shebei = new device(mess.socket, device.getType(clientType));
+                            device shebei = new device(mess.point, device.getType(clientType));
                             onlineUser[id].devices.Add(shebei);
                         }
                     }
@@ -94,7 +95,7 @@ namespace WindowsFormsApplication2.core
                     uint userId = uint.Parse(offInfor.SelectSingleNode("id").InnerText);
                     string pass = offInfor.SelectSingleNode("password").InnerText;
                     string client = offInfor.SelectSingleNode("clientType").InnerText;
-                    device she = new device(mess.socket, device.getType(client));
+                    device she = new device(mess.point, device.getType(client));
                     bool userIsOnline = false;
                     try {
                         user u = onlineUser[userId];
@@ -173,6 +174,7 @@ namespace WindowsFormsApplication2.core
         {
             receiveMessage = new Thread(new ParameterizedThreadStart(listen.getNextMessage));
             receiveMessage.Start(messages);
+
             ser.showText("接受消息线程启动");
             solveMessages = new Thread(solve);
             solveMessages.Start();

@@ -1,35 +1,40 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Net.Sockets;
 using System.Net;
 using WindowsFormsApplication2.contract;
 using System.Collections.Concurrent;
-
+using WindowsFormsApplication2.core;
 namespace WindowsFormsApplication2.dataEntry
 {
    public class listen:IDisposable
     {
-        Socket receiveSocket;
-
-       public  listen()
+        UdpClient client;
+        server ser;
+       
+       public  listen(server ser)
         {
-            receiveSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+            this.ser = ser;
             IPEndPoint local = new IPEndPoint(IPAddress.Any, actionConst.port);
-            receiveSocket.Bind(local);
-            receiveSocket.Listen(500);
+            client = SendMessage.getInstance().getUdpClient();
         }
-       public   void getNextMessage(object queue)
+   
+        public void getNextMessage(object queue)
         {
-            ConcurrentQueue<message> con=(ConcurrentQueue<message>)queue;
-            Socket remote = receiveSocket.Accept();
-            byte[] data = new byte[2048];
-            remote.Receive(data);
-            string str = ASCIIEncoding.UTF8.GetString(data);
-            message message = new message(str,remote);
-            con.Enqueue(message);
+            try
+            {
+                ConcurrentQueue<message> con = (ConcurrentQueue<message>)queue;
+                IPEndPoint remote = new IPEndPoint(IPAddress.Any,0);
+                byte[] data= client.Receive(ref remote);
+                ser.showText("有设备接入");
+                string str = ASCIIEncoding.UTF8.GetString(data);
+                message message = new message(str, remote);
+                con.Enqueue(message);
+            }
+            catch (Exception e)
+            {
+
+            }
         }
 
         #region IDisposable Support
@@ -42,7 +47,6 @@ namespace WindowsFormsApplication2.dataEntry
                 if (disposing)
                 {
                 }
-                receiveSocket.Close();
                 disposedValue = true;
             }
         }
@@ -52,9 +56,6 @@ namespace WindowsFormsApplication2.dataEntry
             Dispose(true);
         }
         #endregion
-
-
-
-
+        
     }
 }

@@ -59,6 +59,7 @@
     <Compile Include="core\device.cs" />
     <Compile Include="core\listen.cs" />
     <Compile Include="core\manager.cs" />
+    <Compile Include="core\SendMessage.cs" />
     <Compile Include="dataEntry\group.cs" />
     <Compile Include="dataEntry\user.cs" />
     <Compile Include="data\groupList.cs" />

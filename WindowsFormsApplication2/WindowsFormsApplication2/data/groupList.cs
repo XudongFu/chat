@@ -36,8 +36,12 @@ namespace WindowsFormsApplication2.data
         }
 
         string groupPath = @"C:\个人文件\chat\WindowsFormsApplication2\WindowsFormsApplication2\data\savedData\group.txt";
-
         string groupEntryPath = @"C:\个人文件\chat\WindowsFormsApplication2\WindowsFormsApplication2\data\savedData\groupEntry.txt";
+
+
+        //string groupPath = @".\savedData\group.txt";
+
+        //string groupEntryPath = @".\savedData\groupEntry.txt";
         Dictionary<uint, groupdata> groups = new Dictionary<uint, groupdata>();
 
         public groupList()
