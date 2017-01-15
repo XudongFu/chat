@@ -10,6 +10,13 @@
     <password></password>
   </value>
 </message>
+
+<!-- 测试服务器的链接 -->
+  <message>
+    <action>testConnection</action>
+    <th></th>
+    <value></value>
+  </message>
   
   <!--注册-->
   <message>
@@ -28,9 +35,9 @@
 <!--退出-->
 <message>
   <action>signOff</action>
-  <clientType></clientType>
   <th></th>
   <value>
+    <clientType></clientType>
     <id></id>
     <password></password>
   </value>
@@ -50,11 +57,13 @@
   </message>
 
 <!--消息确认-->
-  <confirm>
+  <message>
+    <action>
+      confirm
+    </action>
     <th></th>
     <value></value>
-  </confirm>
-
+  </message>
   
  <!--数据请求，好友和群组列表-->
  <message>
@@ -75,11 +84,9 @@
       <user  condition="add/deleted/changed"></user>
       
       <group condition="add/deleted/changed" ></group>
-      
       <group>
         <user  condition="add/deleted"></user>
       </group>
-    
     </value>
   </message>
 
@@ -106,7 +113,6 @@
     <th></th>
     <from></from>
     <value>
-        
     </value>
   </message> 
 

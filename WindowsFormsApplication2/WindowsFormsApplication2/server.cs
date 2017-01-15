@@ -47,7 +47,10 @@ namespace WindowsFormsApplication2
 
         private void server_FormClosing(object sender, FormClosingEventArgs e)
         {
-           
+            if (control.receiveMessage != null && control.receiveMessage.IsAlive)
+            {
+                control.receiveMessage.Abort();
+            }
         }
 
         private void server_FormClosed(object sender, FormClosedEventArgs e)
@@ -56,10 +59,7 @@ namespace WindowsFormsApplication2
             {
                 control.receiveMessage.Abort();
             }
-            if (control.solveMessages !=null && control.solveMessages.IsAlive)
-            {
-                control.solveMessages.Abort();
-            }
+          
         }
     }
 }

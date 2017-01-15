@@ -48,6 +48,11 @@ namespace WindowsFormsApplication2.contract
         /// </summary>
         public const string dataAnswer = "dataAnswer";
 
+        /// <summary>
+        /// 对于消息的确认
+        /// </summary>
+        public const string confirm = "confirm";
 
+        
     }
 }

@@ -7,11 +7,11 @@ using System.Collections.Concurrent;
 using WindowsFormsApplication2.core;
 namespace WindowsFormsApplication2.dataEntry
 {
-   public class listen:IDisposable
+   public class listen
     {
         UdpClient client;
         server ser;
-       
+              
        public  listen(server ser)
         {
             this.ser = ser;
@@ -19,43 +19,28 @@ namespace WindowsFormsApplication2.dataEntry
             client = SendMessage.getInstance().getUdpClient();
         }
    
-        public void getNextMessage(object queue)
+        public void getNextMessage(object m)
         {
-            try
-            {
-                ConcurrentQueue<message> con = (ConcurrentQueue<message>)queue;
-                IPEndPoint remote = new IPEndPoint(IPAddress.Any,0);
-                byte[] data= client.Receive(ref remote);
-                ser.showText("有设备接入");
-                string str = ASCIIEncoding.UTF8.GetString(data);
-                message message = new message(str, remote);
-                con.Enqueue(message);
-            }
-            catch (Exception e)
-            {
+            manager man = (manager)m;
+            ConcurrentQueue<message> con = man.messages;
 
-            }
-        }
-
-        #region IDisposable Support
-        private bool disposedValue = false; // 要检测冗余调用
-
-        protected virtual void Dispose(bool disposing)
-        {
-            if (!disposedValue)
+            while (true)
             {
-                if (disposing)
+                try
+                {
+                    IPEndPoint remote = new IPEndPoint(IPAddress.Any, 0);
+                    byte[] data = client.Receive(ref remote);
+                    ser.showText("有设备接入");
+                    string str = ASCIIEncoding.UTF8.GetString(data);
+                    message message = new message(str, remote);
+                    con.Enqueue(message);
+                    man.solve();
+                }
+                catch (Exception e)
                 {
                 }
-                disposedValue = true;
             }
         }
-
-        public void Dispose()
-        {
-            Dispose(true);
-        }
-        #endregion
         
     }
 }

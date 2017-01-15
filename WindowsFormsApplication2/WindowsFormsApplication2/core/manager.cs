@@ -21,16 +21,17 @@ namespace WindowsFormsApplication2.core
         public Thread receiveMessage;
         public Thread solveMessages;
         server ser;
-        ConcurrentQueue<message> messages = new ConcurrentQueue<chat.message>();
-
+        public ConcurrentQueue<message> messages = new ConcurrentQueue<chat.message>();
         Dictionary<uint, user> onlineUser = new Dictionary<uint, user>();
-
         listen listen;
+        Dictionary<int, Action> operation;
+
 
         public manager(server ser)
         {
             this.ser = ser;
             listen = new listen(ser);
+            operation = new Dictionary<int, Action>();
         }
 
 
@@ -81,12 +82,19 @@ namespace WindowsFormsApplication2.core
                     XmlNode signInInfor = mess.value;
                     string name = signInInfor.SelectSingleNode("name").InnerText;
                     string sex = signInInfor.SelectSingleNode("sex").InnerText;
-                    string time =signInInfor.SelectSingleNode("birthDay").InnerText;
+                    string time =signInInfor.SelectSingleNode("birthday").InnerText;
                     string company = signInInfor.SelectSingleNode("company").InnerText;
                     string colloge = signInInfor.SelectSingleNode("colloge").InnerText;
                     string password= signInInfor.SelectSingleNode("password").InnerText;
-                    userManager.addUser(new userdata( userList.getFreeId(), name, sex, time, "", colloge, "", company,password,1));
+                    uint newUserId = userList.getFreeId();
+                    mess.sendCarryInfoMessage("<newUserId>"+newUserId+"</newUserId>");
 
+                    operation.Add(mess.th, () =>                  
+                    {
+                        userManager.addUser(new userdata(newUserId, name, sex, time, "", colloge, "", company, password, 1));
+                        ser.showText("用户注册账号成功");
+
+                    });
                     break;
                 //用户退出
                 case actionConst.signOff:
@@ -114,52 +122,52 @@ namespace WindowsFormsApplication2.core
                         catch (Exception e) {
                         }
                     }
-
                     break;
-
+                 //用户发送消息
                 case actionConst.communication:
 
                     communication com = communication.prase(mess.value);
-                    user from = onlineUser[com.from];
-                    from.pushComm(com);
+                    ser.showText(com.from+""+com.to+",内容为"+com.message);
+                    //user from = onlineUser[com.from];
+                    //from.pushComm(com);
+                  
+
                     break;
 
                 case actionConst.dataRequest:
                     XmlNode request = mess.value;
                     int version = mess.version;
                     uint userFrom = mess.from;
-
                     StringBuilder builder = new StringBuilder();
-                    
                     string str = "<message><action>DataAnswer</action ><th >"+mess.th+ "</th><value>";
-
                     builder.Append(str);
-
                     userdata frominfo = userManager.getUser(userFrom);
-
                     frominfo.friends.Where(friend =>friend.verison > version).ToList().ForEach(friend =>
                     {
                         builder.Append("<user  condition='"+friend.condition+"'>"+friend.friendId+ "</user>");
-
                     });
                     builder.Append("</value></message>");
-                    mess.sendStringToDevice(builder.ToString());
-                  
-                    break;
-                default:
+                    mess.sendStringToDevice(builder.ToString());               
                     break;
 
+                case actionConst.confirm:
+                    if (operation.ContainsKey(mess.th))
+                    {
+                        operation[mess.th].Invoke();
+                    }
+                    break;
+                default:
+                    ser.showText("得到不能被处理的消息"+mess.ToXml());
+                    break;
             }
         }
 
-        private void solve()
+        public void solve()
         {
-            while (true) {
-                message m = new message(); ;
-                if (messages.Count != 0 && messages.TryDequeue(out m))
-                {
-                    solveMessage(m);
-                }
+            message m = new message(); ;
+            if (messages.Count != 0 && messages.TryDequeue(out m))
+            {
+                solveMessage(m);
             }
         }
 
@@ -173,12 +181,9 @@ namespace WindowsFormsApplication2.core
         public void doIt(server ser)
         {
             receiveMessage = new Thread(new ParameterizedThreadStart(listen.getNextMessage));
-            receiveMessage.Start(messages);
-
-            ser.showText("接受消息线程启动");
-            solveMessages = new Thread(solve);
-            solveMessages.Start();
-            ser.showText("处理线程消息启动");            
+            receiveMessage.IsBackground = true;
+            receiveMessage.Start(this);
+            ser.showText("接受以及处理消息线程启动");
         }
 
 

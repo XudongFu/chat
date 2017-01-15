@@ -2,9 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Xml;
-using System.Text;
-using System.Threading.Tasks;
-using System.Net.Sockets;
 using System.Net;
 using WindowsFormsApplication2.core;
 namespace WindowsFormsApplication2.contract
@@ -76,6 +73,23 @@ namespace WindowsFormsApplication2.contract
             }
         }
 
+        public void sendCarryInfoMessage(XmlNode value)
+        {
+            string message = getComfirm(th,value);
+            sendStringToDevice(message);
+        }
+
+        public void sendCarryInfoMessage(string value)
+        {
+            XmlDocument doc = new XmlDocument();
+            doc.LoadXml(@"<message><action>confirm</action><th></th><value>"+value+"</value></message>");
+            XmlNode confirm = doc.SelectSingleNode("message");
+            XmlNode xuhao = confirm.SelectSingleNode("th");
+            xuhao.InnerText = th.ToString();
+            sendStringToDevice(confirm.OuterXml);
+        }
+
+
         private  string getComfirm(int th,XmlNode value)
         {
             XmlDocument doc = new XmlDocument();
@@ -84,21 +98,25 @@ namespace WindowsFormsApplication2.contract
             XmlNode xuhao = confirm.SelectSingleNode("th");
             XmlNode valu = confirm.SelectSingleNode("value");
             xuhao.InnerText = th.ToString();
-            //valu.AppendChild(value);
+            valu.InnerText = value.InnerText;
             return confirm.OuterXml;
-
         }
 
 
        public  void sendStringToDevice(string message)
         {
-            SendMessage.getInstance().sendMessage(this);
+            SendMessage.getInstance().sendMessage(message,this.point);
         }
 
 
        public   string ToXml()
         {
             return xmlString;
+        }
+
+        Boolean getConfirm()
+        {
+            return true;
         }
 
     }
