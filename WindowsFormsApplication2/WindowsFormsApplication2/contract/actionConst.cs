@@ -53,6 +53,11 @@ namespace WindowsFormsApplication2.contract
         /// </summary>
         public const string confirm = "confirm";
 
-        
+        /// <summary>
+        /// 用户或者群的信息更新
+        /// </summary>
+        public const string userInfoUpdate = "userInfoUpdate";
+
+      
     }
 }

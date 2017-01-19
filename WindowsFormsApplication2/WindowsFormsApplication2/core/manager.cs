@@ -19,7 +19,6 @@ namespace WindowsFormsApplication2.core
         userList userManager;
         groupList groupManager;
         public Thread receiveMessage;
-        public Thread solveMessages;
         server ser;
         public ConcurrentQueue<message> messages = new ConcurrentQueue<chat.message>();
         Dictionary<uint, user> onlineUser = new Dictionary<uint, user>();
@@ -130,26 +129,52 @@ namespace WindowsFormsApplication2.core
                     ser.showText(com.from+""+com.to+",内容为"+com.message);
                     //user from = onlineUser[com.from];
                     //from.pushComm(com);
-                  
+                    ser.showText("有用户向好友发送消息");
 
                     break;
-
+                //用户向服务器请求数据
                 case actionConst.dataRequest:
                     XmlNode request = mess.value;
                     int version = mess.version;
                     uint userFrom = mess.from;
                     StringBuilder builder = new StringBuilder();
-                    string str = "<message><action>DataAnswer</action ><th >"+mess.th+ "</th><value>";
-                    builder.Append(str);
                     userdata frominfo = userManager.getUser(userFrom);
                     frominfo.friends.Where(friend =>friend.verison > version).ToList().ForEach(friend =>
                     {
                         builder.Append("<user  condition='"+friend.condition+"'>"+friend.friendId+ "</user>");
                     });
-                    builder.Append("</value></message>");
-                    mess.sendStringToDevice(builder.ToString());               
+                    mess.sendCarryInfoMessage(builder.ToString());
+                    ser.showText("客户端发送数据到服务器");          
                     break;
+                case actionConst.userInfoUpdate:
+                    XmlNode update = mess.value;
+                    StringBuilder sb = new StringBuilder();
+                    if (update.FirstChild.Name == "friendId")
+                    {
+                        uint friendId = uint.Parse( update.FirstChild.InnerText);
+                        userdata friend = userManager.getUser(friendId);
+                        sb.Append("<message><action>InfoUpdate</action><th>");
+                        sb.Append(mess.th);
+                        sb.Append("</th><value>");
+                        sb.Append(getXMl("name",friend.userName));
+                        sb.Append(getXMl("id", friend.id));
+                        sb.Append(getXMl("college", friend.colloge));
+                        sb.Append(getXMl("company", friend.commany));
+                        sb.Append(getXMl("birthDay", friend.birthday));
+                        sb.Append(getXMl("where", friend.place));
+                        sb.Append(getXMl("sign", friend.sign));
+                        sb.Append(getXMl("sex", friend.sex));
+                        sb.Append("</value></message> ");
+                        mess.sendStringToDevice(sb.ToString());
+                        ser.showText(sb.ToString());
+                    }
+                  else if (update.FirstChild.Name == "groupId")
+                    {
 
+
+                    }
+
+                    break;
                 case actionConst.confirm:
                     if (operation.ContainsKey(mess.th))
                     {
@@ -161,6 +186,12 @@ namespace WindowsFormsApplication2.core
                     break;
             }
         }
+
+        private string getXMl(string name,object o)
+        {
+            return "<" + name + ">" + o.ToString() + "</" + name + ">";
+        }
+
 
         public void solve()
         {

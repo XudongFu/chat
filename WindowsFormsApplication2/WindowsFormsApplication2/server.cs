@@ -17,16 +17,8 @@ namespace WindowsFormsApplication2
 
         private void inite_Click(object sender, EventArgs e)
         {
-            try
-            {
                 control.initeServer(this);
                 control.doIt(this);
-            }
-            catch (Exception p)
-            {
-                MessageBox.Show(p.Message);
-                this.Close();
-            }
         }
 
         private void server_Load(object sender, EventArgs e)
@@ -59,7 +51,6 @@ namespace WindowsFormsApplication2
             {
                 control.receiveMessage.Abort();
             }
-          
         }
     }
 }

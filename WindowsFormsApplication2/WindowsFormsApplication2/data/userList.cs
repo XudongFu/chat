@@ -99,7 +99,7 @@ namespace WindowsFormsApplication2.data
                     uint userId = uint.Parse(temp[0]);
                     uint friend = uint.Parse(temp[1]);
                     int version = int.Parse(temp[2]);
-                    string condition = temp[2];
+                    string condition = temp[3];
                     friendls.Add(new friendList(userId, friend, version, condition));
                 }
             }
@@ -127,8 +127,17 @@ namespace WindowsFormsApplication2.data
                         info.verison = p.verison;
                         return info;
                     }
-                    
                     ).ToList());
+                    udata.friends.AddRange(friendls.Where(p => p.friendId == id).Select(p =>
+                    {
+                        friendInfo info = new friendInfo();
+                        info.condition = p.condition;
+                        info.friendId = p.friendId;
+                        info.verison = p.verison;
+                        return info;
+                    }
+                 ).ToList());
+
                     users.Add(id, udata);
                 }
             }
@@ -136,15 +145,16 @@ namespace WindowsFormsApplication2.data
             {
             }
             prase.close();
+
+
+
+
         }
 
         public userdata getUser(uint id)
         {
             if (users.ContainsKey(id))
             {
-
-
-
                 return users[id];
             }
             else

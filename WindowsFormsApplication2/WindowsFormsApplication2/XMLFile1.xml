@@ -69,7 +69,6 @@
  <message>
     <action>DataRequest</action>
     <th></th>
-   <!--请求从哪个版本以来的所有数据-->
    <version></version>
    <from></from>
  </message>
@@ -84,7 +83,7 @@
       <user  condition="add/deleted/changed"></user>
       
       <group condition="add/deleted/changed" ></group>
-      <group>
+      <group groupId="">
         <user  condition="add/deleted"></user>
       </group>
     </value>
@@ -93,29 +92,11 @@
   
   <!--请求用户信息-->
    <message>
-      <action>userInfoUpdate</action>
-    <from></from>
-    <th></th>
-      <value>
-          <name></name>
-          <sex></sex>
-          <birthday></birthday>
-          <colloge></colloge>
-          <company></company>
+      <action>InfoUpdate</action>
+      <th></th>
+      <value >
+        <friendId></friendId>
+        <groupId></groupId>
       </value>
   </message>
- 
-
-  
-  <!--请求群组信息-->
-  <message>
-      <action>userInfo</action>
-    <th></th>
-    <from></from>
-    <value>
-    </value>
-  </message> 
-
-  
-
 </root>

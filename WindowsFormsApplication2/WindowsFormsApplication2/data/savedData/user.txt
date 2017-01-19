@@ -1,13 +1,2 @@
-692	fuxudong	男	2017/1/1 22:44:03	深圳	kingdee	ahu	free	pass	1
-115	fuxudong	男	2017/1/1 22:44:04	深圳	kingdee	ahu	free	pass	1
-613	fuxudong	男	2017/1/1 22:44:04	深圳	kingdee	ahu	free	pass	1
-27	fuxudong	男	2017/1/1 22:44:05	深圳	kingdee	ahu	free	pass	1
-645	fuxudong	男	2017/1/1 22:44:05	深圳	kingdee	ahu	free	pass	1
-58	fuxudong	男	2017/1/1 22:44:06	深圳	kingdee	ahu	free	pass	1
-555	fuxudong	男	2017/1/1 22:44:06	深圳	kingdee	ahu	free	pass	1
-77	fuxudong	男	2017/1/1 22:44:07	深圳	kingdee	ahu	free	pass	1
-729	fuxudong	男	2017/1/1 22:44:26	深圳	kingdee	ahu	free	pass	1
-235	fuxudong	男	2017/1/1 22:44:27	深圳	kingdee	ahu	free	pass	1
-718	fuxudong	男	2017/1/1 22:44:27	深圳	kingdee	ahu	free	pass	1
-315	fuxudong	男	2017/1/1 22:44:28	深圳	kingdee	ahu	free	pass	1
-694	fuxudong	男	2017/1/1 22:44:28	深圳	kingdee	ahu	free	pass	1
+555	fuxudong	男	2017/1/1 22:44:03	深圳	kingdee	ahu	free	pass	1
+111	test	男	2017/1/1 22:44:04	深圳	kingdee	ahu	free	pass	1

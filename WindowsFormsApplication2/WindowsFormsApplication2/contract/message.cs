@@ -39,10 +39,10 @@ namespace WindowsFormsApplication2.contract
                 version= int.Parse(message.SelectSingleNode("version").InnerText);
             }
         }
+ 
 
         public  message()
         {
-
         }
 
 
@@ -57,25 +57,21 @@ namespace WindowsFormsApplication2.contract
         {
             if (success)
             {
-                string succ = @"<success></success>";
-                XmlDocument doc = new XmlDocument();
-                doc.LoadXml(succ);
-                string message=getComfirm(th,doc.SelectSingleNode("success"));
+                string succ = @"<success></success>"; 
+                string message=getComfirm(th, succ);
                 sendStringToDevice(message);
             }
             else
             {
                 string succ = @"<fail></fail>";
-                XmlDocument doc = new XmlDocument();
-                doc.LoadXml(succ);
-                string message = getComfirm(th, doc.SelectSingleNode("fail"));
+                string message = getComfirm(th, succ);
                 sendStringToDevice(message);
             }
         }
 
         public void sendCarryInfoMessage(XmlNode value)
         {
-            string message = getComfirm(th,value);
+            string message = getComfirm(th,value.OuterXml);
             sendStringToDevice(message);
         }
 
@@ -90,15 +86,13 @@ namespace WindowsFormsApplication2.contract
         }
 
 
-        private  string getComfirm(int th,XmlNode value)
+        private  string getComfirm(int th,string value)
         {
             XmlDocument doc = new XmlDocument();
-            doc.LoadXml(@"<confirm><th></th><value></value></confirm>");
-            XmlNode confirm = doc.SelectSingleNode("confirm");
+            doc.LoadXml(@"<message><th></th><value>"+value+"</value></message>");
+            XmlNode confirm = doc.SelectSingleNode("message");
             XmlNode xuhao = confirm.SelectSingleNode("th");
-            XmlNode valu = confirm.SelectSingleNode("value");
             xuhao.InnerText = th.ToString();
-            valu.InnerText = value.InnerText;
             return confirm.OuterXml;
         }
 
