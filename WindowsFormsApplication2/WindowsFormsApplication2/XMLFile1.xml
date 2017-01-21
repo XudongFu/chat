@@ -52,7 +52,7 @@
       <from></from>
       <type>user/group</type>
       <to></to>
-      <message></message>
+      <content></content>
     </value>
   </message>
 

@@ -29,7 +29,7 @@ namespace WindowsFormsApplication2.core
             uint fromId = uint.Parse(comminfo.SelectSingleNode("from").InnerText);
             uint to = uint.Parse(comminfo.SelectSingleNode("to").InnerText);
             string type = comminfo.SelectSingleNode("type").InnerText;
-            string value = comminfo.SelectSingleNode("message").InnerText;
+            string value = comminfo.SelectSingleNode("content").InnerText;
             communication com = new communication(fromId, to, type, value);
             return com;
         }

@@ -68,6 +68,7 @@ namespace WindowsFormsApplication2.core
                             device shebei = new device(mess.point, device.getType(clientType));
                             onlineUser[id].devices.Add(shebei);
                         }
+                        us.checkNotSendMessage();
                     }
                     else
                     {
@@ -87,7 +88,6 @@ namespace WindowsFormsApplication2.core
                     string password= signInInfor.SelectSingleNode("password").InnerText;
                     uint newUserId = userList.getFreeId();
                     mess.sendCarryInfoMessage("<newUserId>"+newUserId+"</newUserId>");
-
                     operation.Add(mess.th, () =>                  
                     {
                         userManager.addUser(new userdata(newUserId, name, sex, time, "", colloge, "", company, password, 1));
@@ -127,10 +127,9 @@ namespace WindowsFormsApplication2.core
 
                     communication com = communication.prase(mess.value);
                     ser.showText(com.from+""+com.to+",内容为"+com.message);
-                    //user from = onlineUser[com.from];
-                    //from.pushComm(com);
+                    user from = onlineUser[com.from];
+                    from.pushComm(com);
                     ser.showText("有用户向好友发送消息");
-
                     break;
                 //用户向服务器请求数据
                 case actionConst.dataRequest:

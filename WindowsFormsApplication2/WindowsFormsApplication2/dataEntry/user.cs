@@ -24,6 +24,20 @@ namespace WindowsFormsApplication2.dataEntry
             this.id = id;
         }
 
+
+        public void checkNotSendMessage()
+        {
+            if (devices.Count != 0)
+            {
+                while (list.getUser(id).notReadMess.Count != 0)
+                {
+                    communication temp = list.getUser(id).notReadMess.Dequeue();
+                    sendCommToDev(temp);
+                    list.getUser(id).readMess.Add(temp);
+                }
+            }
+        }
+
         public  void pushComm(communication comm)
         {
             if (devices.Count == 0)
