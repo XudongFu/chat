@@ -42,18 +42,19 @@ namespace WindowsFormsApplication2.dataEntry
         {
             if (devices.Count == 0)
             {
-                list.getUser(id).notReadMess.Enqueue(comm);
+                list.getUser(comm.to).notReadMess.Enqueue(comm);
             }
             else
             {
-                while (list.getUser(id).notReadMess.Count!=0)
+                userdata to = list.getUser(comm.to);
+                while (to.notReadMess.Count!=0)
                 {
-                    communication temp = list.getUser(id).notReadMess.Dequeue();
+                    communication temp = to.notReadMess.Dequeue();
                     sendCommToDev(temp);
-                    list.getUser(id).readMess.Add(temp);
+                    to.readMess.Add(temp);
                 }
                 sendCommToDev(comm);
-                list.getUser(id).readMess.Add(comm);
+                to.readMess.Add(comm);
             }          
         }
 
@@ -65,8 +66,5 @@ namespace WindowsFormsApplication2.dataEntry
             }
         }
 
-
-
-        
     }
 }

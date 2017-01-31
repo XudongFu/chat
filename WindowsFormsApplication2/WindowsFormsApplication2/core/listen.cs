@@ -23,16 +23,15 @@ namespace WindowsFormsApplication2.dataEntry
         {
             manager man = (manager)m;
             ConcurrentQueue<message> con = man.messages;
-
             while (true)
             {
                 try
                 {
                     IPEndPoint remote = new IPEndPoint(IPAddress.Any, 0);
                     byte[] data = client.Receive(ref remote);
-                    ser.showText("有设备接入");
                     string str = ASCIIEncoding.UTF8.GetString(data);
                     message message = new message(str, remote);
+                    ser.showText("有设备发送消息至服务器：内容为："+str);
                     con.Enqueue(message);
                     man.solve();
                 }

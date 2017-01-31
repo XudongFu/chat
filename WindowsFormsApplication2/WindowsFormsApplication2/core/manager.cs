@@ -67,6 +67,7 @@ namespace WindowsFormsApplication2.core
                         {
                             device shebei = new device(mess.point, device.getType(clientType));
                             onlineUser[id].devices.Add(shebei);
+                            onlineUser[id].devices.Distinct();
                         }
                         us.checkNotSendMessage();
                     }
@@ -126,9 +127,10 @@ namespace WindowsFormsApplication2.core
                 case actionConst.communication:
 
                     communication com = communication.prase(mess.value);
-                    ser.showText(com.from+""+com.to+",内容为"+com.message);
-                    user from = onlineUser[com.from];
-                    from.pushComm(com);
+                    ser.showText(com.from+" 发送消息到 "+com.to+" ,内容为"+com.message);
+                    sendMessageToUser(com);
+                    communication test = new communication(0, com.from, "user", "接收到来自于服务器的反馈数据");
+                    sendMessageToUser(test);
                     ser.showText("有用户向好友发送消息");
                     break;
                 //用户向服务器请求数据
@@ -143,7 +145,7 @@ namespace WindowsFormsApplication2.core
                         builder.Append("<user  condition='"+friend.condition+"'>"+friend.friendId+ "</user>");
                     });
                     mess.sendCarryInfoMessage(builder.ToString());
-                    ser.showText("客户端发送数据到服务器");          
+                    ser.showText("向客户端发送数据为："+builder.ToString());        
                     break;
                 case actionConst.userInfoUpdate:
                     XmlNode update = mess.value;
@@ -169,8 +171,6 @@ namespace WindowsFormsApplication2.core
                     }
                   else if (update.FirstChild.Name == "groupId")
                     {
-
-
                     }
 
                     break;
@@ -186,6 +186,17 @@ namespace WindowsFormsApplication2.core
             }
         }
 
+
+        private void sendMessageToUser(communication mess)
+        {
+            if (onlineUser.ContainsKey(mess.to))
+            {
+                user u = onlineUser[mess.to];
+                u.pushComm(mess);
+            }
+          
+        }
+       
         private string getXMl(string name,object o)
         {
             return "<" + name + ">" + o.ToString() + "</" + name + ">";
@@ -205,7 +216,6 @@ namespace WindowsFormsApplication2.core
         {
             inite(ser);
             ser.showText("服务器加载数据完毕");
-            
         }
 
         public void doIt(server ser)
@@ -215,13 +225,6 @@ namespace WindowsFormsApplication2.core
             receiveMessage.Start(this);
             ser.showText("接受以及处理消息线程启动");
         }
-
-
-        bool UserIsOnline(uint id)
-        {
-            return false;
-        }
-
-
+       
     }
 }

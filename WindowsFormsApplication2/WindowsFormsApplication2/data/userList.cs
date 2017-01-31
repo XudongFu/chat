@@ -132,12 +132,11 @@ namespace WindowsFormsApplication2.data
                     {
                         friendInfo info = new friendInfo();
                         info.condition = p.condition;
-                        info.friendId = p.friendId;
+                        info.friendId = p.userId;
                         info.verison = p.verison;
                         return info;
                     }
                  ).ToList());
-
                     users.Add(id, udata);
                 }
             }
@@ -145,10 +144,6 @@ namespace WindowsFormsApplication2.data
             {
             }
             prase.close();
-
-
-
-
         }
 
         public userdata getUser(uint id)

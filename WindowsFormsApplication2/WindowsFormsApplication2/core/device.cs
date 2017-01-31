@@ -33,14 +33,25 @@ namespace WindowsFormsApplication2.dataEntry
         {
             device shebei = obj as device;
             return this.point == shebei.point && type == shebei.type;
-           
         }
 
 
         public void sendMessage(communication com)
         {
+            StringBuilder builder = new StringBuilder();
+            builder.Append("<message><action>communication</action><th>"+getTh());
+            builder.Append("</th><value><from>"+com.from);
+            builder.Append("</from><type>"+com.type);
+            builder.Append("</type><to>"+com.to);
+            builder.Append("</to><content>"+com.message);
+            builder.Append("</content></value></message>");
+            SendMessage.getInstance().sendMessage(builder.ToString(), point);
+        }
 
-
+        public int getTh()
+        {
+            Random p = new Random(DateTime.Now.Millisecond);
+            return   p.Next(0, int.MaxValue);
         }
 
         public   static deviceType getType(string type)
